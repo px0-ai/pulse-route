@@ -68,6 +68,7 @@ px0 cmd/gateway/main.go:14
 - Open `internal/limiter/limiter.go`.
 - Locate lines 35-43 inside `Allow()`: note the unprotected access to `tb.tokens` and `tb.lastRefill`.
 - Select lines 34-45 and press `Alt+E` (or right-click and choose Edit Inline).
+- Check the harness and model selectors in the composer box to ensure your preferred tool (Claude Code, Antigravity, Gemini CLI, or OpenCode) is active.
 - Enter the instruction:
   ```text
   Wrap the refill calculation and token deduction in tb.mu.Lock() and tb.mu.Unlock() to prevent data races.
@@ -84,20 +85,22 @@ px0 cmd/gateway/main.go:14
   ```
 - Track tool steps streaming via Server-Sent Events and review the files modified during the turn.
 
-### 9. Git Review and AI Commit
+### 9. Git Review, Unpushed Commits, and AI Commit
 
 - Press `Ctrl+D` to toggle between the file explorer and uncommitted git changes.
 - Review the split and unified diffs generated from previous agent edits.
 - In the sidebar Git panel docked below the tree, click Stage All.
 - Click Commit with AI (`#git-generate-msg`) to generate a commit message from the staged diff.
-- Click Commit to record the changes.
+- Click Commit to record the changes locally.
+- In the sidebar, notice the Unpushed Commits section appear above the Git panel: hover over the commit to view the floating commit card (author, SHA, diffstat), and click it to inspect individual commit diffs before pushing.
 
 ### 10. Pull Request Review Mode
 
-- Review any remote pull request directly without branch switching or manual checkout:
+- Review any active GitHub pull request directly without branch switching or manual checkout:
   ```bash
-  px0 https://github.com/owner/repo/pull/123
+  px0 https://github.com/<owner>/<repo>/pull/<id>
   ```
+  Or from within an active px0 session, press `Ctrl+K` and select "Git: Open Pull Request...".
 - Inspect scoped merge-base diffs within an isolated temporary worktree.
 - Select diff lines and press `Alt+R` to draft inline review comments.
 - Click Batch Apply in the review header to run your coding agent against all drafted comments simultaneously.
